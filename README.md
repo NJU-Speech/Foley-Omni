@@ -9,13 +9,15 @@
 # Demo
 
 <p align="center">
-  <a href="assets/demo.mp4">
-    <img src="assets/demo_preview.gif" alt="Foley-Omni demo preview" width="100%">
-  </a>
-</p>
-
-<p align="center">
-  Click the preview to watch the full demo video.
+  <video
+    src="https://raw.githubusercontent.com/ty0402/Foley-Omni/main/assets/demo.mp4"
+    controls
+    autoplay
+    muted
+    loop
+    playsinline
+    width="85%">
+  </video>
 </p>
 
 
