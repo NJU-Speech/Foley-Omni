@@ -4,13 +4,13 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-b31b1b?logo=arxiv)])
 [![Hugging Face](https://img.shields.io/badge/HuggingFace-Model-FFD21E?logo=huggingface&logoColor=000000)](https://huggingface.co/CocoBro/Foley-Omni)
-[![Demo](https://img.shields.io/badge/Demo-Video-2563eb?logo=youtube&logoColor=white)](assets/demo.mp4)
+[![Demo](https://img.shields.io/badge/Demo-Video-2563eb?logo=youtube&logoColor=white)](https://github.com/ty0402/Foley-Omni/issues/1)
 
 # Demo
 
 <p align="center">
   <video
-    src="https://raw.githubusercontent.com/ty0402/Foley-Omni/main/assets/demo.mp4"
+    src="https://github.com/user-attachments/assets/14ed8124-04d5-4333-89f9-4fd699e93d98"
     controls
     autoplay
     muted
@@ -26,7 +26,7 @@
 
 
 Foley-Omni focuses on **Video-to-Soundtrack (V2ST)** generation.
-Given a video and optional text conditioning, Foley-Omni jointly generates synchronized **speech**, **sound effects**, and **music**. Besides, the model also supports single-task inference such as **Text-to-Audio (TTA)** and **Video-to-Audio (V2A)**.
+Given a video and optional text conditioning, Foley-Omni jointly generates synchronized **speech**, **sound effects**, and **music**. Besides, the model also supports single-task inference such as task-level generation for **speech synthesis**, **sound effect generation**, and **music composition**.
 
 > **V2ST-Bench** for complete video soundtrack generation：     **Coming soon** .
 
@@ -197,5 +197,4 @@ We would like to thank the following projects:
 
 - **MMAudio**: Foley-Omni reuses MMAudio's audio VAE and feature extractor.
 - **Ovi** and **Wan2.2**: the DiT design and implementation are primarily developed with reference to Ovi and Wan2.2.
-
 
