@@ -9,6 +9,10 @@
 
 > **TL; DR:**  We present Foley-Omni and V2ST-Bench to advance audio generation from isolated task-level synthesis to complete soundtrack generation from text and video.
 
+<p align="center">
+  <img src="assets/Foley-Omni_str.png" alt="Foley-Omni architecture" width="68%">
+</p>
+
 # Demo
 
 <p align="center">
