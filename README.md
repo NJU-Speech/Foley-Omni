@@ -26,7 +26,7 @@
 
 
 Foley-Omni focuses on **Video-to-Soundtrack (V2ST)** generation.
-Given a video and optional text conditioning, Foley-Omni jointly generates synchronized **speech**, **sound effects**, and **music**. Besides, the model also supports single-task inference such as task-level generation for **speech synthesis**, **sound effect generation**, and **music composition**.
+Given a video and  text conditioning, Foley-Omni jointly generates synchronized **speech**, **sound effects**, and **music**. Besides, the model also supports single-task inference such as task-level generation for **speech synthesis**, **sound effect generation**, and **music composition**.
 
 > **V2ST-Bench** for complete video soundtrack generation：     **Coming soon** .
 
