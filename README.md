@@ -7,7 +7,7 @@
 <a href="https://github.com/ty0402/Foley-Omni/issues/1"><img src="https://img.shields.io/badge/Demo-Video-orange"></a>
 </div>
 
-> **TL; DR:** Foley-Omni is a unified multimodal generation model for complete video soundtrack generation. Given a video and text conditions, it jointly generates synchronized **speech**, **sound effects**, and **music**, while also supporting task-level generation for **speech synthesis**, **sound effect generation**, and **music composition**.
+> **TL; DR:**  We present Foley-Omni and V2ST-Bench to advance audio generation from isolated task-level synthesis to complete soundtrack generation from text and video.
 
 # Demo
 
