@@ -1,12 +1,11 @@
 # Foley-Omni
 
-**Foley-Omni: A Unified Multimodal Generation Model from Task-Level Audio Synthesis to Complete Video Soundtrack Generation**
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-brightgreen.svg?style=flat-square)](ARXIV_LINK)
+[![Project Page](https://img.shields.io/badge/Project%20Page-Demo-purple?style=flat-square)](PROJECT_PAGE_LINK)
+[![Hugging Face Models](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue?style=flat-square)](https://huggingface.co/CocoBro/Foley-Omni)
+[![Demo](https://img.shields.io/badge/Demo-Video-orange?style=flat-square)](https://github.com/ty0402/Foley-Omni/issues/1)
 
-[![arXiv](https://img.shields.io/badge/arXiv-Paper-b31b1b?logo=arxiv)])
-[![Hugging Face](https://img.shields.io/badge/HuggingFace-Model-FFD21E?logo=huggingface&logoColor=000000)](https://huggingface.co/CocoBro/Foley-Omni)
-[![Demo](https://img.shields.io/badge/Demo-Video-2563eb?logo=youtube&logoColor=white)](https://github.com/ty0402/Foley-Omni/issues/1)
-
-# Demo
+## Demo
 
 <p align="center">
   <video
@@ -20,50 +19,20 @@
   </video>
 </p>
 
+## Introduction
 
-# Overview
-
-
-
-Foley-Omni focuses on **Video-to-Soundtrack (V2ST)** generation.
-Given a video and  text conditioning, Foley-Omni jointly generates synchronized **speech**, **sound effects**, and **music**. Besides, the model also supports single-task inference such as task-level generation for **speech synthesis**, **sound effect generation**, and **music composition**.
-
-> **V2ST-Bench** for complete video soundtrack generation：     **Coming soon** .
-
-# Install
-
-The public release was verified in the `video` environment with:
-
-- Python 3.10
-- CUDA 12.4
-- PyTorch 2.6.0
-- FlashAttention 2.7.4.post1
-
-```bash
-git clone https://github.com/ty0402/Foley-Omni.git
-cd Foley-Omni
-
-conda create -n foley-omni python=3.10 -y
-conda activate foley-omni
-
-# Install PyTorch first
-pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
-
-# Install other dependencies
-pip install -r requirements.txt
-
-# Install Flash Attention
-pip install flash_attn==2.7.4.post1 --no-build-isolation
-
-# Install the Hugging Face CLI
-pip install -U "huggingface_hub[cli]"
-```
+**Foley-Omni** is a unified multimodal generation model for **Video-to-Soundtrack (V2ST)**.  
+Given a video and text conditions, Foley-Omni jointly generates synchronized **speech**, **sound effects**, and **music**. Besides complete soundtrack generation, the public release also supports task-level generation for **speech synthesis**, **sound effect generation**, and **music composition**.
 
 ---
-## Download
 
-The released checkpoints are hosted at `https://huggingface.co/CocoBro/Foley-Omni`.
-Download the full checkpoint package with:
+## Model Download
+
+| Models | 🤗 Hugging Face |
+|-------|-------|
+| Foley-Omni | [CocoBro/Foley-Omni](https://huggingface.co/CocoBro/Foley-Omni) |
+
+Download the released checkpoints into `./ckpts/` with:
 
 ```bash
 bash scripts/download_release_ckpts.sh CocoBro/Foley-Omni
@@ -90,46 +59,97 @@ ckpts/
         └── synchformer_state_dict.pth
 ```
 
-# Inference
+---
 
-The current public  checkpoint is designed for videos **up to 10 seconds**.
-For best results, trim each input video to **10 seconds or shorter** before inference.
+## Model Usage
 
-## Run example
+### Dependencies and Installation
 
-Batch inference:
+- Python >= 3.10
+- [PyTorch 2.6.0](https://pytorch.org/)
+- CUDA 12.4
+- FlashAttention 2.7.4.post1
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/ty0402/Foley-Omni.git
+cd Foley-Omni
+
+# 2. Create environment
+conda create -n foley-omni python=3.10 -y
+conda activate foley-omni
+
+# 3. Install PyTorch and dependencies
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+pip install -r requirements.txt
+pip install flash_attn==2.7.4.post1 --no-build-isolation
+pip install -U "huggingface_hub[cli]"
+
+# 4. Download released checkpoints
+bash scripts/download_release_ckpts.sh CocoBro/Foley-Omni
+```
+
+### Quick Start
+
+#### 1. Video-to-Soundtrack Inference
+
+The public checkpoint is designed for videos **up to 10 seconds**.
 
 ```bash
 python inference_v2st.py --config-file inference_v2st.yaml
 ```
 
+The default batch example is:
 
+- [examples/video_text_example.json](./examples/video_text_example.json)
 
-Generated files will be written to `output_dir` and include:
+Generated files are written to `./outputs/v2st/`, including:
 
 - `*.mp4`: input video merged with the generated soundtrack
+- `pred_mapping.jsonl`: output mapping file
+- `inference_config.yaml`: saved runtime config
 
+#### 2. Single-Video Inference
 
-Single-video inference:
+Edit [inference_v2st.yaml](./inference_v2st.yaml):
 
-1. Disable `json_file` in [inference_v2st.yaml](inference_v2st.yaml)
+1. Disable `json_file`
 2. Set `video_path`
 3. Set `text_prompt`
-4. Run:
+
+Then run:
 
 ```bash
 python inference_v2st.py --config-file inference_v2st.yaml
 ```
-## Format
 
-The batch example file is:
+#### 3. Text-Only Generation
 
-- [examples/video_text_example.json](examples/video_text_example.json)
+Representative text-only prompts are provided at:
 
-Each JSON key is a video path.
-Each JSON value is a metadata object for soundtrack generation.
+- [examples/text_example.jsonl](./examples/text_example.jsonl)
 
-Minimal example:
+Run:
+
+```bash
+python inference.py --config-file inference_fusion.yaml
+```
+
+Outputs are written to `./outputs/text_only/` as `*.wav` files.
+
+#### 4. Setup Check
+
+Before inference, you can verify that the required local checkpoints are in place:
+
+```bash
+python scripts/check_setup.py
+```
+
+---
+
+## Input Format
+
+The batch V2ST input file is a JSON dictionary:
 
 ```json
 {
@@ -139,6 +159,8 @@ Minimal example:
 }
 ```
 
+Each key is a video path. Each value is a metadata object for soundtrack generation.
+
 Supported fields:
 
 - `resp`: required structured prompt string
@@ -147,21 +169,23 @@ Supported fields:
 
 The `resp` field can contain any subset of the following blocks:
 
-- `[WORDS] ... [END_WORDS]`: speech content to be spoken in the generated soundtrack
-- `[AUDIO_CAPTION] ... [END_AUDIO_CAPTION]`: sound effects, acoustic events, actions, speaker prompt
+- `[WORDS] ... [END_WORDS]`: speech content
+- `[AUDIO_CAPTION] ... [END_AUDIO_CAPTION]`: sound effects, actions, and acoustic events
 - `[MUSIC] ... [END_MUSIC]`: background music style, mood, instrumentation, and tempo
 
 Notes:
 
-- At least one of `WORDS`, `AUDIO_CAPTION`, or `MUSIC` should be present in each sample.
+- At least one of `WORDS`, `AUDIO_CAPTION`, or `MUSIC` should be present.
 - `clip_feature_path` and `sync_feature_path` are optional.
-- If feature paths are not provided, Foley-Omni extracts visual features from the input video.
+- If features are not provided, Foley-Omni extracts visual features online from the input video.
+
+---
 
 ## Prepare Visual Features
 
 To pre-extract CLIP and Sync features, use:
 
-- [data_process/convert_memmap_to_npy.py](data_process/convert_memmap_to_npy.py)
+- [data_process/convert_memmap_to_npy.py](./data_process/convert_memmap_to_npy.py)
 
 Example:
 
@@ -173,28 +197,21 @@ python data_process/convert_memmap_to_npy.py \
   --gpu_ids 0
 ```
 
-This script reads the input videos, extracts `clip_feature_path` and `sync_feature_path`, and writes an updated JSON manifest that can be used directly by [inference_v2st.py](inference_v2st.py).
+---
 
-## Text-Only Generation
+## Todo
 
-Representative text-only prompts are provided at:
+- [x] Release model weights
+- [x] Release inference code
+- [ ] Release V2ST-Bench
 
-- [examples/text_example.jsonl](examples/text_example.jsonl)
+---
 
-The default text-only config is:
+## Acknowledgement
 
-- [inference_fusion.yaml](inference_fusion.yaml)
+We thank the following open-source projects for their inspiration and code:
 
-Run text-only generation with:
-
-```bash
-python inference.py --config-file inference_fusion.yaml
-```
-
-# Acknowledgements
-
-We would like to thank the following projects:
-
-- **MMAudio**: Foley-Omni reuses MMAudio's audio VAE and feature extractor.
-- **Ovi** and **Wan2.2**: the DiT design and implementation are primarily developed with reference to Ovi and Wan2.2.
+- [MMAudio](https://github.com/hkchengrex/MMAudio)
+- [Ovi](https://github.com/Wan-Video/Ovi)
+- [Wan2.2](https://github.com/Wan-Video/Wan2.2)
 
