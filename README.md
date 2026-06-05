@@ -47,7 +47,7 @@ The public release was verified in the environment with:
 - FlashAttention 2.7.4.post1
 
 ```bash
-git clone https://github.com/ty0402/Foley-Omni.git
+git clone https://github.com/NJU-Speech/Foley-Omni.git
 cd Foley-Omni
 
 conda create -n foley-omni python=3.10 -y
